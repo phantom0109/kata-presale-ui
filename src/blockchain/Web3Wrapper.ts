@@ -32,12 +32,14 @@ export default class Web3Wrapper {
         const ethBalacne = await this.web3.eth.getBalance(this.account);
         const tokensAvailable = await this.Presale.call("getClaimable");
         const claimed = await this.Presale.call("claimedTokens", this.account);
-        
+        const isWhitelist = await this.Presale.call("isWhitelist",this.account);
+
         return {
             kataBalance: BntoNum(kataBalance, tokenInfos.KATA.decimals),
             ethBalance: BntoNum(ethBalacne, tokenInfos.ETH.decimals),
             tokensAvailable: BntoNum(tokensAvailable, tokenInfos.KATA.decimals),
-            claimed: BntoNum(claimed, tokenInfos.KATA.decimals)
+            claimed: BntoNum(claimed, tokenInfos.KATA.decimals),
+            isWhitelist:Boolean(isWhitelist)
         }
     }    
 

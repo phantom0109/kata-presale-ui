@@ -72,6 +72,8 @@ export const getTargetTime = (salesData) => {
     return { targetTime: salesData.endTime, timerTitle: "Presale is Live" };
   else if (salesData.status === 0)
     return { targetTime: salesData.startTime, timerTitle: "Presale starts soon" };
+  else if (salesData.status === 4)
+    return { targetTime: salesData.endTime, timerTitle: "Presale is Live" };
   
   return {};
 }
@@ -90,6 +92,7 @@ export const getPresaleData = async () => {
 
   const startTime = Number(await presale.call("startTime"));
   const endTime = Number(await presale.call("endTime"));    
+  const whitelistTime = Number(await presale.call("whitelistTime"));
   const tgeTime = Number(await presale.call("tgeTime"));
 
   const tokenPrice = await presale.call("price");
@@ -100,6 +103,8 @@ export const getPresaleData = async () => {
   let status = 0;
   if (currentTime < startTime)
     status = 0;
+  else if(currentTime < whitelistTime)
+    status = 4;
   else if (currentTime < endTime)
     status = 1;
   else if (currentTime < tgeTime)
@@ -115,6 +120,7 @@ export const getPresaleData = async () => {
     status,
     startTime,
     endTime,
+    whitelistTime,
     tgeTime,
     totalGoal: BntoNum(totalGoal, tokenInfos.ETH.decimals)
   };

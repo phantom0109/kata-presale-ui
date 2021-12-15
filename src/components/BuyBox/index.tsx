@@ -2,7 +2,7 @@
 import ETH from "assets/eth.svg";
 import { Button, Form } from "react-bootstrap";
 import useAccountData from '../../hooks/useAccountData';
-import { toFixed } from '../../blockchain/utils';
+import { toFixed, getDateStr } from '../../blockchain/utils';
 import LoaderSpinner from "react-loader-spinner";
 import { useState, useCallback, useContext } from 'react';
 import { NotificationManager } from 'react-notifications';
@@ -79,52 +79,63 @@ const BuyBox = (props) => {
       />
      
     ):(
-      <div className="mt-3">
-        <div className="d-flex justify-content-between px-5 mb-1">
-          <h4 className="font-weight-bold">Balance:</h4>
-          <h4 className="font-weight-bold">{toFixed(accountData.kataBalance, 2)}</h4>
-        </div>
+      
+      (salesData.status ===4 && !accountData.isWhitelist) ?
+        (
+          <div className="justify-content-between px-5 mb-1">
+            <h3 className="no-cliam-start">You can buy $KATA from</h3>
+            <h3 className="no-cliam-start">{getDateStr(salesData.whitelistTime)}</h3>
+          </div>
+        )
+        :
+        (
+          <div className="mt-3">
+          <div className="d-flex justify-content-between px-5 mb-1">
+            <h4 className="font-weight-bold">Balance:</h4>
+            <h4 className="font-weight-bold">{toFixed(accountData.kataBalance, 2)}</h4>
+          </div>
         
-        <div className=" d-flex justify-content-end px-5 mb-3">
-          <div className="input_sec d-flex align-items-center">
-            <img className="px-2" src={ETH} alt="" height="30px" />
-            <h3 className="font-weight-bold pe-2 pt-1">ETH</h3>
+          <div className=" d-flex justify-content-end px-5 mb-3">
+            <div className="input_sec d-flex align-items-center">
+              <img className="px-2" src={ETH} alt="" height="30px" />
+              <h3 className="font-weight-bold pe-2 pt-1">ETH</h3>
+            </div>
           </div>
-        </div>
   
-        <div className="px-5 mb-3 text-right">
-          <Form.Control 
-            type="text" 
-            onChange={handleChange}
-            value={ethAmount}
-            className="custom_input text-right"
-            disabled={buyRequested}
-          />
-        </div>
+          <div className="px-5 mb-3 text-right">
+            <Form.Control 
+              type="text" 
+              onChange={handleChange}
+              value={ethAmount}
+              className="custom_input text-right"
+              disabled={buyRequested}
+            />
+          </div>
   
-        <div className=" d-flex justify-content-between px-5">
-          <div><h6 className="tokenAmount">={calcTokenAmount()} $KATA</h6></div>
-          <div>
-            <h6 
-              className="font_avertastd_regular font-weight-normal max-eth"
-              onClick={handleMaxClick}
-              style={{ cursor: buyRequested?"auto":"pointer" }}
+          <div className=" d-flex justify-content-between px-5">
+            <div><h6 className="tokenAmount">={calcTokenAmount()} $KATA</h6></div>
+            <div>
+              <h6 
+                className="font_avertastd_regular font-weight-normal max-eth"
+                onClick={handleMaxClick}
+                style={{ cursor: buyRequested?"auto":"pointer" }}
+              >
+                MAX: {toFixed(accountData.ethBalance, 4)}
+                </h6>
+            </div>
+          </div>
+  
+          <div className="py-4">
+            <Button className="btn-primary skew-btn px-2 py-2"
+              onClick={handleBuy}
+              disabled={buyRequested}
             >
-              MAX: {toFixed(accountData.ethBalance, 4)}
-              </h6>
+              { buyRequested?"PURCHASING...":"PURCHASE" }
+            </Button>
           </div>
-        </div>
   
-        <div className="py-4">
-          <Button className="btn-primary skew-btn px-2 py-2"
-            onClick={handleBuy}
-            disabled={buyRequested}
-          >
-            { buyRequested?"PURCHASING...":"PURCHASE" }
-          </Button>
-        </div>
-  
-      </div>
+        </div> 
+        )
     )
     }
     </>
