@@ -80,10 +80,10 @@ const BuyBox = (props) => {
      
     ):(
       
-      (salesData.status ===4 && !accountData.isWhitelist) ?
+      (salesData.status === 4 && !accountData.isWhitelist) ?
         (
           <div className="justify-content-between px-5 mb-1">
-            <h3 className="no-cliam-start">You can buy $KATA from</h3>
+            <h3 className="no-cliam-start">This account is not whitelisted. You can not buy until</h3>
             <h3 className="no-cliam-start">{getDateStr(salesData.whitelistTime)}</h3>
           </div>
         )

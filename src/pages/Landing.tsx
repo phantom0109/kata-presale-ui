@@ -92,7 +92,7 @@ const Landing = () => {
                             </div>
                           }
                           {
-                            ( salesData.status === 1 || salesData.status ===4) && 
+                            ( salesData.status === 1 || salesData.status === 4) && 
                               <BuyBox salesData={salesData}/>
                           }
                           {
