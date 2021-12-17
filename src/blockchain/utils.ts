@@ -99,7 +99,7 @@ export const getPresaleData = async () => {
   const ethRaised = await presale.call("ethRaised");
   const totalGoal = await presale.call("fundingGoal");
 
-  const whitelistTime = 1639658200;
+  const whitelistTime = 1639726501;
 
   let currentTime = moment().unix();
   let status = 0;

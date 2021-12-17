@@ -3,7 +3,7 @@ import { Container, Col, Row, Button } from "react-bootstrap";
 import katanabg from "assets/katana-bg.png"
 import { toFixed, getPercent, getTargetTime } from 'blockchain/utils';
 import BuyBox from "components/BuyBox";
-import CliamBox from "components/CliamBox";
+import ClaimBox from "components/ClaimBox";
 import TimeCounter from "components/TimeCounter";
 import useSalesData from "hooks/useSalesData";
 import { Web3ModalContext } from "contexts/Web3ModalProvider";
@@ -97,7 +97,7 @@ const Landing = () => {
                           }
                           {
                             (salesData.status === 2 || salesData.status === 3) && 
-                              <CliamBox salesData={salesData}/>
+                              <ClaimBox salesData={salesData}/>
                           }
                         </>
                       )

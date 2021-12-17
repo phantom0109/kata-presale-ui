@@ -7,7 +7,7 @@ import { useState, useCallback, useContext } from 'react';
 import { NotificationManager } from 'react-notifications';
 import {Web3WrapperContext} from "contexts/Web3WrapperProvider";
 
-const CliamBox = (props) => {
+const ClaimBox = (props) => {
 
   const accountData = useAccountData();
   const { salesData } = props;
@@ -53,22 +53,22 @@ const CliamBox = (props) => {
             salesData.status === 2 ? (
               <div className="justify-content-between px-5 mb-1">
                 <h2 className="font-weight-bold">Purchased: {toFixed(accountData.kataBalance, 2)} {tokenInfos.KATA.symbol}</h2>
-                <h3 className="no-cliam-start">$KATA starts being unlocked from</h3>
-                <h3 className="no-cliam-start">{getDateStr(salesData.tgeTime)}</h3>
+                <h3 className="no-claim-start">$KATA starts being unlocked from</h3>
+                <h3 className="no-claim-start">{getDateStr(salesData.tgeTime)}</h3>
               </div>
             ):(
               <div className='mt-3 '>
                 <div className="d-flex justify-content-between px-1 mb-1">
-                  <h5 className="cliam-info">Purchased:</h5>
-                  <h3 className="font-weight-bold cliam-color">{toFixed(accountData.kataBalance, 2)} {tokenInfos.KATA.symbol}</h3>
+                  <h5 className="claim-info">Purchased:</h5>
+                  <h3 className="font-weight-bold claim-color">{toFixed(accountData.kataBalance, 2)} {tokenInfos.KATA.symbol}</h3>
                 </div>
                 <div className="d-flex justify-content-between px-1 mb-1">
-                    <h5 className="cliam-info">Claimed: </h5>
-                    <h3 className="font-weight-bold text-right cliam-color"> {toFixed(accountData.claimed, 2)} $KATA</h3>
+                    <h5 className="claim-info">Claimed: </h5>
+                    <h3 className="font-weight-bold text-right claim-color"> {toFixed(accountData.claimed, 2)} $KATA</h3>
                 </div>
                 <div className="d-flex justify-content-between px-1 mb-1">
                     <h5>Now Claim: </h5>
-                    <h3 className="font-weight-bold text-right cliam-now-color"> {toFixed(accountData.tokensAvailable, 2)} $KATA</h3>
+                    <h3 className="font-weight-bold text-right claim-now-color"> {toFixed(accountData.tokensAvailable, 2)} $KATA</h3>
                 </div>
 
                 <div className="py-4">
@@ -90,4 +90,4 @@ const CliamBox = (props) => {
   )
 }
 
-export default CliamBox;
+export default ClaimBox;
