@@ -41,9 +41,9 @@ const Web3ModalProvider = ({ children }) => {
         package: WalletConnectProvider,
         options: {
           rpc: {
-            42: rpcUrls[42],
+            1: rpcUrls[1],
           },
-          network: 'kovan',
+          network: 'Ethereum Mainnet',
         }
       }
     };

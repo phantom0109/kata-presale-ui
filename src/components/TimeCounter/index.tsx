@@ -22,6 +22,7 @@ const TimeCounter = (props) => {
       }
       var currentTime = moment().unix();
       var diffTime = eventTime - currentTime;
+      console.log({diffTime});
       var dur = moment.duration(diffTime * 1000, "milliseconds");
       if (dur.asMilliseconds() > 0) {
         countDownTimer = setInterval(() => {
@@ -53,7 +54,7 @@ const TimeCounter = (props) => {
       <Col xs={3} className="px-2">
         <div className="count-pad h-100 d-flex flex-column justify-content-between">
           <div className="count-number-pad">
-            <h1>{toTwoDigit(Math.floor(duration?.hours()) ?? "0")}</h1>
+            <h1>{toTwoDigit(Math.floor(duration?.days()) ?? "0")}</h1>
           </div>
           <span className="d-none d-sm-block span-cls">
             Days

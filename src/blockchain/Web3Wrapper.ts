@@ -3,7 +3,7 @@ import { addresses, tokenInfos } from './constants';
 import  Presale from "./contracts/Presale";
 import ERC20 from "./contracts/ERC20";
 import { BntoNum, NumToBn } from './utils';
-import { whitelist } from './whitelist';
+// import { whitelist } from './whitelist';
 
 export default class Web3Wrapper {
     web3: Web3;
@@ -34,15 +34,16 @@ export default class Web3Wrapper {
         const ethBalacne = await this.web3.eth.getBalance(this.account);
         const tokensAvailable = await this.Presale.call("getClaimable");
         const claimed = await this.Presale.call("claimedTokens", this.account);
-
-        const result = whitelist.find(addr => this.web3.utils.toChecksumAddress(addr) === this.account);
+        const whitelist = await this.Presale.call("whitelist",this.account);
+        // const result = whitelist.find(addr => this.web3.utils.toChecksumAddress(addr) === this.account);
 
         return {
             kataBalance: BntoNum(kataBalance, tokenInfos.KATA.decimals),
             ethBalance: BntoNum(ethBalacne, tokenInfos.ETH.decimals),
             tokensAvailable: BntoNum(tokensAvailable, tokenInfos.KATA.decimals),
             claimed: BntoNum(claimed, tokenInfos.KATA.decimals),
-            isWhitelist: (result !== undefined),
+            // isWhitelist: (result !== undefined),
+            isWhitelist: Boolean(whitelist)
         }
     }    
 

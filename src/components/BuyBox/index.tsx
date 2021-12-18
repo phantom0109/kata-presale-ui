@@ -22,8 +22,10 @@ const BuyBox = (props) => {
   } 
 
   const handleMaxClick = useCallback(() => {
-    if (!buyRequested && accountData)
-      setEthAmount(accountData.ethBalance)
+    if (!buyRequested && accountData) {
+      const amount = Number(accountData.ethBalance) > Number(salesData.maxInvestFund) ? Number(salesData.maxInvestFund) : Number(accountData.ethBalance);
+      setEthAmount(amount.toString());
+    }
   }, [accountData, buyRequested])
 
   const calcTokenAmount = useCallback(() => {
@@ -120,7 +122,7 @@ const BuyBox = (props) => {
                 onClick={handleMaxClick}
                 style={{ cursor: buyRequested?"auto":"pointer" }}
               >
-                MAX: {toFixed(accountData.ethBalance, 4)}
+                WALLET BALANCE: {toFixed(accountData.ethBalance, 4)}
                 </h6>
             </div>
           </div>
