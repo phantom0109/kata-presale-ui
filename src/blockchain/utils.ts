@@ -125,7 +125,7 @@ export const getPresaleData = async () => {
     startTime,
     endTime,
     whitelistTime,
-    tgeCliffTime,
+    tgeTime,
     totalGoal: BntoNum(totalGoal, tokenInfos.ETH.decimals)
   };
 }

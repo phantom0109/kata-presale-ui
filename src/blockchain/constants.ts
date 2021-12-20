@@ -20,7 +20,7 @@ export const addresses = {
     1: '0x3D0A17185610a095873Dada98D52242933923F91'
   },
   PresaleClaim: {
-    1: '0x3D0A17185610a095873Dada98D52242933923F91'
+    1: ''
   },
 }
 
