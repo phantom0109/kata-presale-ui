@@ -19,6 +19,9 @@ export const addresses = {
     42: '0xe454B14138DAc65Cd108Ad49FE2A08db8fCFcA1c',
     1: '0x3D0A17185610a095873Dada98D52242933923F91'
   },
+  PresaleClaim: {
+    1: '0x3D0A17185610a095873Dada98D52242933923F91'
+  },
 }
 
 export const tokenInfos = {

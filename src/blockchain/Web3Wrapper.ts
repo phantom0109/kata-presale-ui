@@ -3,6 +3,7 @@ import { addresses, tokenInfos } from './constants';
 import  Presale from "./contracts/Presale";
 import ERC20 from "./contracts/ERC20";
 import { BntoNum, NumToBn } from './utils';
+import PresaleClaim from './contracts/PresaleClaim';
 // import { whitelist } from './whitelist';
 
 export default class Web3Wrapper {
@@ -13,7 +14,7 @@ export default class Web3Wrapper {
 
     kataToken: ERC20;
     Presale: Presale;
-
+    PresaleClaim: PresaleClaim;
 
     constructor(web3, chainId, account, options = {}) {
 
@@ -28,13 +29,17 @@ export default class Web3Wrapper {
 
         this.kataToken = new ERC20(this.wrapperOptions, tokenInfos.KATA.address[this.chainId]);
         this.Presale = new Presale(this.wrapperOptions, addresses.Presale[this.chainId]);
+        this.PresaleClaim = new PresaleClaim(this.wrapperOptions, addresses.PresaleClaim[this.chainId]);
     } 
     async getAccountData() {
         const kataBalance = await this.Presale.call("buyTokens", this.account);
         const ethBalacne = await this.web3.eth.getBalance(this.account);
-        const tokensAvailable = await this.Presale.call("getClaimable");
-        const claimed = await this.Presale.call("claimedTokens", this.account);
+        // const tokensAvailable = await this.Presale.call("getClaimable");
+        // const claimed = await this.Presale.call("claimedTokens", this.account);
+        const tokensAvailable = await this.PresaleClaim.call("getClaimable");
+        const claimed = await this.PresaleClaim.call("claimedTokens", this.account);
         const whitelist = await this.Presale.call("whitelist",this.account);
+
         // const result = whitelist.find(addr => this.web3.utils.toChecksumAddress(addr) === this.account);
 
         return {
@@ -59,7 +64,7 @@ export default class Web3Wrapper {
 
     async claim() {
         try {
-            const tx = await this.Presale.send("claim", null);
+            const tx = await this.PresaleClaim.send("claim", null);
             return tx;
         } catch (e) {
             console.log(e);
