@@ -54,7 +54,7 @@ const ClaimBox = (props) => {
               <div className="justify-content-between px-5 mb-1">
                 <h2 className="font-weight-bold">Purchased: {toFixed(accountData.kataBalance, 2)} {tokenInfos.KATA.symbol}</h2>
                 <h3 className="no-claim-start">$KATA starts being unlocked from</h3>
-                <h3 className="no-claim-start">{getDateStr(salesData.tgeCliffTime)}</h3>
+                <h3 className="no-claim-start">{getDateStr(salesData.tgeTime)}</h3>
               </div>
             ):(
               <div className='mt-3 '>
