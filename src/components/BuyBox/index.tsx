@@ -10,7 +10,7 @@ import {Web3WrapperContext} from "../../contexts/Web3WrapperProvider";
 import { tokenInfos } from '../../blockchain/constants';
 
 const BuyBox = (props) => {
-  
+
   const accountData = useAccountData();
   const {salesData} = props;
   const { web3Wrapper: wrapper } = useContext(Web3WrapperContext);
@@ -19,14 +19,14 @@ const BuyBox = (props) => {
 
   const handleChange = (e) => {
     setEthAmount(e.target.value);
-  } 
+  }
 
   const handleMaxClick = useCallback(() => {
     if (!buyRequested && accountData) {
       const amount = Number(accountData.ethBalance) > Number(salesData.maxInvestFund) ? Number(salesData.maxInvestFund) : Number(accountData.ethBalance);
       setEthAmount(amount.toString());
     }
-  }, [accountData, buyRequested])
+  }, [accountData, buyRequested, salesData.maxInvestFund])
 
   const calcTokenAmount = useCallback(() => {
     if (isNaN(Number(ethAmount))) return 0;
@@ -63,7 +63,7 @@ const BuyBox = (props) => {
       NotificationManager.error('Buy Transaction Error');
       return;
     }
-    
+
     NotificationManager.success(`${calcTokenAmount()} ${tokenInfos.KATA.symbol} purchased`, 'Purchase Success');
     setEthAmount("0");
 
@@ -72,16 +72,16 @@ const BuyBox = (props) => {
   return (
     <>
     {!accountData ? (
-      
+
       <LoaderSpinner
           type="ThreeDots"
           color="#FEA604"
           height={30}
           width={30}
       />
-     
+
     ):(
-      
+
       (salesData.status === 4 && !accountData.isWhitelist) ?
         (
           <div className="justify-content-between px-5 mb-1">
@@ -96,28 +96,28 @@ const BuyBox = (props) => {
             <h4 className="font-weight-bold">Balance:</h4>
             <h4 className="font-weight-bold">{toFixed(accountData.kataBalance, 2)}</h4>
           </div>
-        
+
           <div className=" d-flex justify-content-end px-5 mb-3">
             <div className="input_sec d-flex align-items-center">
               <img className="px-2" src={ETH} alt="" height="30px" />
               <h3 className="font-weight-bold pe-2 pt-1">ETH</h3>
             </div>
           </div>
-  
+
           <div className="px-5 mb-3 text-right">
-            <Form.Control 
-              type="text" 
+            <Form.Control
+              type="text"
               onChange={handleChange}
               value={ethAmount}
               className="custom_input text-right"
               disabled={buyRequested}
             />
           </div>
-  
+
           <div className=" d-flex justify-content-between px-5">
             <div><h6 className="tokenAmount">={calcTokenAmount()} $KATA</h6></div>
             <div>
-              <h6 
+              <h6
                 className="font_avertastd_regular font-weight-normal max-eth"
                 onClick={handleMaxClick}
                 style={{ cursor: buyRequested?"auto":"pointer" }}
@@ -126,7 +126,7 @@ const BuyBox = (props) => {
                 </h6>
             </div>
           </div>
-  
+
           <div className="py-4">
             <Button className="btn-primary skew-btn px-2 py-2"
               onClick={handleBuy}
@@ -135,13 +135,12 @@ const BuyBox = (props) => {
               { buyRequested?"PURCHASING...":"PURCHASE" }
             </Button>
           </div>
-  
-        </div> 
+
+        </div>
         )
     )
     }
     </>
   );
-} 
+}
 export default BuyBox;
-            
