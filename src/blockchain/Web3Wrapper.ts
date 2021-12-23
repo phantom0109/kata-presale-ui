@@ -3,8 +3,7 @@ import { addresses, tokenInfos } from './constants';
 import  Presale from "./contracts/Presale";
 import ERC20 from "./contracts/ERC20";
 import { BntoNum, NumToBn } from './utils';
-import PresaleClaim from './contracts/PresaleClaim';
-// import { whitelist } from './whitelist';
+// import PresaleClaim from './contracts/PresaleClaim';
 
 export default class Web3Wrapper {
     web3: Web3;
@@ -14,7 +13,7 @@ export default class Web3Wrapper {
 
     kataToken: ERC20;
     Presale: Presale;
-    PresaleClaim: PresaleClaim;
+    // PresaleClaim: PresaleClaim;
 
     constructor(web3, chainId, account, options = {}) {
 
@@ -29,25 +28,22 @@ export default class Web3Wrapper {
 
         this.kataToken = new ERC20(this.wrapperOptions, tokenInfos.KATA.address[this.chainId]);
         this.Presale = new Presale(this.wrapperOptions, addresses.Presale[this.chainId]);
-        this.PresaleClaim = new PresaleClaim(this.wrapperOptions, addresses.PresaleClaim[this.chainId]);
+        // this.PresaleClaim = new PresaleClaim(this.wrapperOptions, addresses.PresaleClaim[this.chainId]);
     } 
     async getAccountData() {
         const kataBalance = await this.Presale.call("buyTokens", this.account);
         const ethBalacne = await this.web3.eth.getBalance(this.account);
         // const tokensAvailable = await this.Presale.call("getClaimable");
         // const claimed = await this.Presale.call("claimedTokens", this.account);
-        const tokensAvailable = await this.PresaleClaim.call("getClaimable");
-        const claimed = await this.PresaleClaim.call("claimedTokens", this.account);
+        // const tokensAvailable = await this.PresaleClaim.call("getClaimable");
+        // const claimed = await this.PresaleClaim.call("claimedTokens", this.account);
         const whitelist = await this.Presale.call("whitelist",this.account);
-
-        // const result = whitelist.find(addr => this.web3.utils.toChecksumAddress(addr) === this.account);
 
         return {
             kataBalance: BntoNum(kataBalance, tokenInfos.KATA.decimals),
             ethBalance: BntoNum(ethBalacne, tokenInfos.ETH.decimals),
-            tokensAvailable: BntoNum(tokensAvailable, tokenInfos.KATA.decimals),
-            claimed: BntoNum(claimed, tokenInfos.KATA.decimals),
-            // isWhitelist: (result !== undefined),
+            // tokensAvailable: BntoNum(tokensAvailable, tokenInfos.KATA.decimals),
+            // claimed: BntoNum(claimed, tokenInfos.KATA.decimals),
             isWhitelist: Boolean(whitelist)
         }
     }    
@@ -62,13 +58,13 @@ export default class Web3Wrapper {
         }
     }
 
-    async claim() {
-        try {
-            const tx = await this.PresaleClaim.send("claim", null);
-            return tx;
-        } catch (e) {
-            console.log(e);
-            return false;
-        }
-    }
+    // async claim() {
+    //     try {
+    //         const tx = await this.PresaleClaim.send("claim", null);
+    //         return tx;
+    //     } catch (e) {
+    //         console.log(e);
+    //         return false;
+    //     }
+    // }
 }
