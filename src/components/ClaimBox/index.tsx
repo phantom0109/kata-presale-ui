@@ -3,39 +3,40 @@ import useAccountData from 'hooks/useAccountData';
 import LoaderSpinner from "react-loader-spinner";
 import { toFixed, getDateStr } from 'blockchain/utils';
 import { tokenInfos } from 'blockchain/constants';
-import { useState, useCallback, useContext } from 'react';
-import { NotificationManager } from 'react-notifications';
-import {Web3WrapperContext} from "contexts/Web3WrapperProvider";
+// import { useState, useCallback, useContext } from 'react';
+// import { NotificationManager } from 'react-notifications';
+// import {Web3WrapperContext} from "contexts/Web3WrapperProvider";
+import { Link } from "react-router-dom";
 
 const ClaimBox = (props) => {
 
   const accountData = useAccountData();
   const { salesData } = props;
-  const { web3Wrapper: wrapper } = useContext(Web3WrapperContext);
-  const [claimRequested, setClaimReqeusted] = useState<boolean>(false);
+  // const { web3Wrapper: wrapper } = useContext(Web3WrapperContext);
+  // const [claimRequested, setClaimReqeusted] = useState<boolean>(false);
   
-  const handleClaim = useCallback(async () => {
-    if (!wrapper) return;
-    if (isNaN(Number(accountData?.tokensAvailable)) || Number(accountData?.tokensAvailable) <= 0) {
-      NotificationManager.error("If you still have remaining tokens to claim, please wait until the next unlock.", "Nothing to claim!");
-      return;
-    }
-    setClaimReqeusted(true);
-    const txHash = await wrapper.claim();
-    setClaimReqeusted(false);
-    if (!txHash) {
-      NotificationManager.error('Claim Transaction Error');
-      return;
-    }
+  // const handleClaim = useCallback(async () => {
+  //   if (!wrapper) return;
+  //   if (isNaN(Number(accountData?.tokensAvailable)) || Number(accountData?.tokensAvailable) <= 0) {
+  //     NotificationManager.error("If you still have remaining tokens to claim, please wait until the next unlock.", "Nothing to claim!");
+  //     return;
+  //   }
+  //   setClaimReqeusted(true);
+  //   const txHash = await wrapper.claim();
+  //   setClaimReqeusted(false);
+  //   if (!txHash) {
+  //     NotificationManager.error('Claim Transaction Error');
+  //     return;
+  //   }
     
-    NotificationManager.success(`${accountData?.tokensAvailable} ${tokenInfos.KATA.symbol} claimed`, 'Claim Success');
+  //   NotificationManager.success(`${accountData?.tokensAvailable} ${tokenInfos.KATA.symbol} claimed`, 'Claim Success');
 
-  }, [accountData, wrapper])
+  // }, [accountData, wrapper])
   
-  const getClaimText = useCallback(() => {
-    if (!accountData || !accountData.tokensAvailable) return "Nothing to Claim";
-    return "Claim";
-  }, [accountData])
+  // const getClaimText = useCallback(() => {
+  //   if (!accountData || !accountData.tokensAvailable) return "Nothing to Claim";
+  //   return "Claim";
+  // }, [accountData])
 
   return (
     <>
@@ -58,7 +59,7 @@ const ClaimBox = (props) => {
               </div>
             ):(
               <div className='mt-3 '>
-                <div className="d-flex justify-content-between px-1 mb-1">
+                {/* <div className="d-flex justify-content-between px-1 mb-1">
                   <h5 className="claim-info">Purchased:</h5>
                   <h3 className="font-weight-bold claim-color">{toFixed(accountData.kataBalance, 2)} {tokenInfos.KATA.symbol}</h3>
                 </div>
@@ -69,16 +70,24 @@ const ClaimBox = (props) => {
                 <div className="d-flex justify-content-between px-1 mb-1">
                     <h5>Now Claim: </h5>
                     <h3 className="font-weight-bold text-right claim-now-color"> {toFixed(accountData.tokensAvailable, 2)} $KATA</h3>
-                </div>
+                </div> */}
 
                 <div className="py-4">
-                <Button 
+                {/* <Button 
                     className="btn-primary skew-btn px-2 py-2"
                     onClick={handleClaim}
                     disabled={claimRequested}
                 >
                     {claimRequested?"Claiming...":`${getClaimText()}`}
-                </Button>
+                </Button> */}
+                
+                  <Link className="text-decoration-none" to={{ pathname: "https://claim.katanainu.com" }} target="_blank" >
+                    <Button 
+                      className="btn-primary skew-btn px-2 py-2"
+                    >
+                      Claim
+                    </Button>
+                  </Link>
                 </div>
               </div>
             )

@@ -94,6 +94,7 @@ export const getPresaleData = async () => {
   const endTime = Number(await presale.call("endTime"));    
   const whitelistTime = Number(await presale.call("whitelistTime"));
   const tgeTime = Number(await presale.call("tgeTime"));
+  // const tgeCliffTime = Number(await presale.call("tgeCliffTime"));
 
   const tokenPrice = await presale.call("price");
   const ethRaised = await presale.call("ethRaised");
